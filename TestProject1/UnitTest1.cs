@@ -1,4 +1,4 @@
-using 
+using MsTestOnUserRegistration;
 namespace MsTestOnUserRegistration
 {
     [TestClass]
@@ -86,31 +86,37 @@ namespace MsTestOnUserRegistration
             Assert.AreEqual(output, true);
         }
         [TestMethod]
-        [DataRow("abc@yahoo.com")]    //pass
-        [DataRow("abc-100@yahoo.com")]   //pass ..
-        [DataRow("abc.100@yahoo.com")]
-        [DataRow("abc111@abc.com")]
-        [DataRow("abc-100@abc.net")]
-        [DataRow("abc.100@abc.com.au")]
-        [DataRow("abc@1.com")]
-        [DataRow("abc@gmail.com.com")]
-        [DataRow("abc+100@gmail.com")]
-        [DataRow("abc", "abc@.com.my")]
-        [DataRow("abc123@gmail.a")]
-        [DataRow("abc123@.com")]
-        [DataRow("abc123@.com.com")]
-        [DataRow(".abc@abc.com")]
-        [DataRow("abc()*@gmail.com")]
-        [DataRow("abc@%*.com")]
-        [DataRow("abc..2002@gmail.com")]
-        [DataRow("abc.@gmail.com")]
-        [DataRow("abc@abc@gmail.com")]
-        [DataRow("abc@gmail.com.1a")]
-        [DataRow("abc@gmail.com.aa.au")]
-        public void EmailSample(string userInput)
+        [DataRow("abc@yahoo.com", "Validated successfully!")]
+        [DataRow("abc-100@yahoo.com", "Validated successfully!")]
+        [DataRow("abc.100@yahoo.com", "Validated successfully!")]
+        [DataRow("abc111@abc.com", "Validated successfully!")]
+        [DataRow("abc-100@abc.net", "Validated successfully!")]
+        [DataRow("abc.100@abc.com.au", "Validated successfully!")]
+        [DataRow("abc@1.com", "Validated successfully!")]
+        [DataRow("abc@gmail.com.com", "Validated successfully!")]
+        [DataRow("abc+100@gmail.com", "Validated successfully!")]
+        [DataRow("abc@.com.my", "Entered Email ID is not in proper format .Please try again with something different.")]
+        [DataRow("abc123@gmail.a", "Entered Email ID is not in proper format .Please try again with something different.")]
+        [DataRow("abc123@.com", "Entered Email ID is not in proper format .Please try again with something different.")]
+        [DataRow("abc123@.com.com", "Entered Email ID is not in proper format .Please try again with something different.")]
+        [DataRow(".abc@abc.com", "Entered Email ID is not in proper format .Please try again with something different.")]
+        [DataRow("abc()*@gmail.com", "Entered Email ID is not in proper format .Please try again with something different.")]
+        [DataRow("abc@%*.com", "Entered Email ID is not in proper format .Please try again with something different.")]
+        [DataRow("abc..2002@gmail.com", "Entered Email ID is not in proper format .Please try again with something different.")]
+        [DataRow("abc.@gmail.com", "Entered Email ID is not in proper format .Please try again with something different.")]
+        [DataRow("abc@abc@gmail.com", "Entered Email ID is not in proper format .Please try again with something different.")]
+        [DataRow("abc@gmail.com.1a", "Entered Email ID is not in proper format .Please try again with something different.")]
+        [DataRow("abc@gmail.com.aa.au", "Entered Email ID is not in proper format .Please try again with something different.")]
+        public void EmailSample(string userInput, string expected)
         {
-            bool output = UserDetails.EmailSample(userInput);      //UC9 Email Samples .
-            Assert.AreEqual(output, true);
+            try
+            {
+                string actualOutput = UserDetails.EmailId(userInput);
+            }
+            catch (CustomExceptionInvalidInput ex)
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
         }
     }
 }
